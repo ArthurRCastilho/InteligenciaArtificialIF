@@ -18,8 +18,8 @@ def fitness(route, distance_matrix):
 # Seleção dos Pais (as duas melhores rotas)
 def select_parents(population, distance_matrix):
     # pais_aleatorios = random.sample(population, 2)
-    pais_sortidos = sorted(population, key=lambda x: fitness(x, distance_matrix))[:2]
-    return pais_sortidos
+    pais_ordenados = sorted(population, key=lambda x: fitness(x, distance_matrix))[:2]
+    return pais_ordenados
 
 # Recombinação Genética (Crossover)
 def crossover(parent1, parent2):
