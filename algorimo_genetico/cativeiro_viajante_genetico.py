@@ -10,13 +10,13 @@ def create_distance_matrix(num_cities):
 def create_initial_population(pop_size, num_cities):
     return [random.sample(range(num_cities), num_cities) for _ in range(pop_size)]
 
-# Cálculo de custo de uma rota
+# Cálculo de custo de uma rota``
 def fitness(route, distance_matrix):
     return sum(distance_matrix[route[i], route[i+1]] for i in range(len(route)-1)) + distance_matrix[route[-1], route[0]]
 # Soma as distâncias entre cidades consecutivas e incluindo o retorno à cidade inicial.
 
-# Seleção dos Pais (as duas melhores rotas)
-def select_parents(population, distance_matrix, best_parents_rate=0.3):
+# Seleção dos Pais
+def select_parents(population, distance_matrix, best_parents_rate=0.6):
     pais_aleatorios = random.sample(population, 2)
 
     if random.random() < best_parents_rate:
@@ -37,7 +37,7 @@ def crossover(parent1, parent2):
 #     return route
 
 # Mutação com probabilidade
-def mutate(route, mutation_rate=0.25):
+def mutate(route, mutation_rate=0.1):
     if random.random() < mutation_rate:
         i, j = random.sample(range(len(route)), 2) # Troca aleatória de duas cidades
         route[i], route[j] = route[j], route[i]
@@ -45,7 +45,7 @@ def mutate(route, mutation_rate=0.25):
 
 
 # Algoritmo Genético
-def genetic_algorithm(num_cities=20, pop_size=20, generations=50):
+def genetic_algorithm(num_cities=20, pop_size=100, generations=100):
     distance_matrix = create_distance_matrix(num_cities)  # Inicializa a matriz de distância
     population = create_initial_population(pop_size, num_cities)  # Inicializa a população
     
