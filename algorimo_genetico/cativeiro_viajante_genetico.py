@@ -16,10 +16,14 @@ def fitness(route, distance_matrix):
 # Soma as distâncias entre cidades consecutivas e incluindo o retorno à cidade inicial.
 
 # Seleção dos Pais (as duas melhores rotas)
-def select_parents(population, distance_matrix):
-    # pais_aleatorios = random.sample(population, 2)
-    pais_ordenados = sorted(population, key=lambda x: fitness(x, distance_matrix))[:2]
-    return pais_ordenados
+def select_parents(population, distance_matrix, best_parents_rate=0.3):
+    pais_aleatorios = random.sample(population, 2)
+
+    if random.random() < best_parents_rate:
+        pais_ordenados = sorted(population, key=lambda x: fitness(x, distance_matrix))[:2]
+        return pais_ordenados
+    
+    return pais_aleatorios
 
 # Recombinação Genética (Crossover)
 def crossover(parent1, parent2):
@@ -27,10 +31,18 @@ def crossover(parent1, parent2):
     return parent1[:cut] + [city for city in parent2 if city not in parent1[:cut]]
 
 # Mutação
-def mutate(route):
-    i, j = random.sample(range(len(route)), 2)  # Troca aleatória de duas cidades
-    route[i], route[j] = route[j], route[i]
+# def mutate(route):
+#     i, j = random.sample(range(len(route)), 2)  # Troca aleatória de duas cidades
+#     route[i], route[j] = route[j], route[i]
+#     return route
+
+# Mutação com probabilidade
+def mutate(route, mutation_rate=0.25):
+    if random.random() < mutation_rate:
+        i, j = random.sample(range(len(route)), 2) # Troca aleatória de duas cidades
+        route[i], route[j] = route[j], route[i]
     return route
+
 
 # Algoritmo Genético
 def genetic_algorithm(num_cities=20, pop_size=20, generations=50):
