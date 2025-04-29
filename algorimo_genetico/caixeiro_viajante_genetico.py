@@ -10,7 +10,7 @@ def create_distance_matrix(num_cities):
 def create_initial_population(pop_size, num_cities):
     return [random.sample(range(num_cities), num_cities) for _ in range(pop_size)]
 
-# Cálculo de custo de uma rota``
+# Cálculo de custo de uma rota
 def fitness(route, distance_matrix):
     return sum(distance_matrix[route[i], route[i+1]] for i in range(len(route)-1)) + distance_matrix[route[-1], route[0]]
 # Soma as distâncias entre cidades consecutivas e incluindo o retorno à cidade inicial.
